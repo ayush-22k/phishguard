@@ -3,4 +3,22 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyReq, req) => {
+            // Vite's http-proxy does not automatically forward the Cookie header
+            // on its outgoing request when changeOrigin is true. Explicitly copy
+            // it so the backend receives the HttpOnly refresh token cookie.
+            if (req.headers.cookie) {
+              proxyReq.setHeader('Cookie', req.headers.cookie);
+            }
+          });
+        },
+      },
+    },
+  },
 });

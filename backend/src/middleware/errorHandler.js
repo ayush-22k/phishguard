@@ -11,15 +11,20 @@ export function notFoundHandler(_request, response) {
 }
 
 export function errorHandler(error, _request, response, _next) {
-  if (env.nodeEnv !== 'test') {
+  const statusCode = Number.isInteger(error.statusCode) ? error.statusCode : (Number.isInteger(error.status) ? error.status : 500);
+  const isHttpError = error.constructor.name === 'HttpError' || error.statusCode !== undefined;
+  const code = error.code || (statusCode < 500 ? 'BAD_REQUEST' : 'INTERNAL_ERROR');
+  const message = isHttpError ? error.message : (statusCode < 500 ? error.message : 'An unexpected error occurred.');
+
+  if (statusCode >= 500 && env.nodeEnv !== 'test') {
     console.error('Unhandled application error:', error);
   }
 
-  response.status(500).json({
+  response.status(statusCode).json({
     success: false,
     error: {
-      code: 'INTERNAL_ERROR',
-      message: 'An unexpected error occurred.',
+      code,
+      message,
     },
   });
 }
