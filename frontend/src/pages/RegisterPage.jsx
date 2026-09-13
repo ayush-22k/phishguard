@@ -19,8 +19,8 @@ export default function RegisterPage() {
 
     try {
       await register(name, email, password);
-      // After successful registration, redirect to login
-      navigate('/login', { state: { message: 'Registration successful! Please sign in.' } });
+      // After successful registration and auto-login, redirect directly to dashboard
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.error?.message || 'Registration failed. Please check your inputs.');
     } finally {

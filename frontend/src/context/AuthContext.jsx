@@ -66,7 +66,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
-    return await authService.register(name, email, password);
+    const res = await authService.register(name, email, password);
+    if (res?.success) {
+      await login(email, password);
+    }
+    return res;
   };
 
   const logout = async () => {
