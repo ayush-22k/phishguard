@@ -257,11 +257,6 @@ export default function HistoryDetailPage() {
             Detailed security analysis for this scan.
           </p>
         </div>
-        <div className="mt-4 sm:mt-0 flex items-center space-x-3">
-          <div className="text-sm font-mono text-slate-500 bg-panel px-3 py-1 rounded border border-line">
-            ID: {scan.id}
-          </div>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

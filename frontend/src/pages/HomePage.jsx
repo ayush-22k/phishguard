@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo.png';
 
 function HomePage() {
+  const { user } = useAuth();
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow">
@@ -31,15 +33,26 @@ function HomePage() {
             </p>
             
             <div className="mt-10 flex items-center gap-x-6 animate-fade-in-delayed">
-              <Link
-                to="/register"
-                className="rounded-md bg-accent px-6 py-3 text-sm font-semibold text-surface shadow-sm hover:bg-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-transform hover:scale-105"
-              >
-                Sign Up Free
-              </Link>
-              <Link to="/login" className="text-sm font-semibold leading-6 text-slate-300 hover:text-white transition-colors flex items-center gap-1 group">
-                Log In <span aria-hidden="true" className="group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
+              {user ? (
+                <Link
+                  to="/dashboard"
+                  className="rounded-md bg-accent px-6 py-3 text-sm font-semibold text-surface shadow-sm hover:bg-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-transform hover:scale-105"
+                >
+                  Go to Dashboard →
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to="/register"
+                    className="rounded-md bg-accent px-6 py-3 text-sm font-semibold text-surface shadow-sm hover:bg-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-transform hover:scale-105"
+                  >
+                    Sign Up Free
+                  </Link>
+                  <Link to="/login" className="text-sm font-semibold leading-6 text-slate-300 hover:text-white transition-colors flex items-center gap-1 group">
+                    Log In <span aria-hidden="true" className="group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
           

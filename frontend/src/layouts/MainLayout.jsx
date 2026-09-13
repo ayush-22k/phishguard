@@ -9,7 +9,7 @@ function MainLayout() {
     <div className="min-h-screen bg-surface text-slate-100 flex flex-col">
       <header className="border-b border-line bg-[#091626]">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <Link className="flex items-center font-semibold tracking-tight" to="/">
+          <Link className="flex items-center font-semibold tracking-tight" to={user ? "/dashboard" : "/"}>
             <img src={logo} alt="PhishGuard" className="h-10 object-contain" />
           </Link>
           
